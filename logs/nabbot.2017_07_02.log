@@ -1,0 +1,88 @@
+2017-07-02 11:14:51,742:INFO: Command by Killer in PM: /uptime
+2017-07-02 11:14:56,411:INFO: Command by Killer in PM: /help
+2017-07-02 11:14:59,740:INFO: Command by Killer in PM: /about
+2017-07-02 12:59:26,978:INFO: Command by Killer in PM: /about
+2017-07-02 17:09:01,722:INFO: Command by Killer in PM: /help
+2017-07-02 17:17:02,270:INFO: Command by Killer in PM: /help
+2017-07-02 17:17:08,030:INFO: Command by Killer in PM: /tool teste
+2017-07-02 17:18:23,620:INFO: Command by Killer in PM: /tool teste
+2017-07-02 17:22:45,995:INFO: Command by Killer in PM: /tool teste
+2017-07-02 17:26:54,992:INFO: Command by Killer in PM: /tool teste
+2017-07-02 17:30:19,071:INFO: Command by Killer in PM: /tool teste
+2017-07-02 17:32:53,811:INFO: Command by Killer in PM: /tool teste
+2017-07-02 17:34:42,519:INFO: Command by Killer in PM: /tool teste
+2017-07-02 17:35:24,048:INFO: Command by Killer in PM: /tool teste
+2017-07-02 17:37:40,666:INFO: Command by Killer in PM: /tool teste
+2017-07-02 17:39:46,310:INFO: Command by Killer in PM: /tool teste
+2017-07-02 17:39:54,659:ERROR: get_tool: Couldn't fetch teste, page 0, network error.
+2017-07-02 17:47:46,958:INFO: Command by Killer in PM: /tool teste
+2017-07-02 17:47:55,288:ERROR: get_tool: Couldn't fetch teste, page 0, network error.
+2017-07-02 18:16:31,970:INFO: Command by Killer in PM: /tool tool
+2017-07-02 18:21:26,834:INFO: Command by Killer in PM: /tool tool
+2017-07-02 18:23:11,545:INFO: Command by Killer in PM: /tool tool
+2017-07-02 18:27:27,711:INFO: Command by Killer in PM: /tool tool
+2017-07-02 18:27:55,542:INFO: Command by Killer in PM: /tool teste
+2017-07-02 18:33:17,713:INFO: Command by Killer in PM: /tool tool
+2017-07-02 18:38:30,241:INFO: Command by Killer in PM: /tool tool
+2017-07-02 18:38:56,812:INFO: Command by Killer in PM: /tool Mario 64 Level importer
+2017-07-02 18:39:04,949:INFO: Command by Killer in PM: /tool Mario 64 Level Importer
+2017-07-02 18:41:38,084:INFO: Command by Killer in PM: /tool Mario 64 Level Importer
+2017-07-02 18:59:52,648:INFO: Command by Killer in PM: /tool
+2017-07-02 19:00:19,881:INFO: Command by Killer in PM: /tool tool
+2017-07-02 19:00:19,883:INFO: Command by Killer in PM: /help
+2017-07-02 19:01:07,420:INFO: Command by Killer in PM: /tool tool
+2017-07-02 19:02:45,156:INFO: Command by Killer in PM: /tool tool
+2017-07-02 19:04:10,555:INFO: Command by Killer in PM: /tool tool
+2017-07-02 19:09:50,727:INFO: Command by Killer in PM: /tool tool
+2017-07-02 19:13:58,744:INFO: Command by Killer in PM: /tool tool
+2017-07-02 19:16:49,767:INFO: Command by Killer in PM: /tool tool
+2017-07-02 19:19:21,249:INFO: Command by Killer in PM: /tool tool
+2017-07-02 19:22:56,530:INFO: Command by Killer in PM: /tool tool
+2017-07-02 19:23:35,453:INFO: Command by Killer in PM: /tool tool
+2017-07-02 19:25:16,466:INFO: Command by Killer in PM: /tool tool
+2017-07-02 19:26:50,567:INFO: Command by Killer in PM: /tool tool
+2017-07-02 19:27:12,115:INFO: Command by Killer in PM: /tool teste
+2017-07-02 19:27:16,618:INFO: Command by Killer in PM: /tool
+2017-07-02 19:34:58,644:INFO: Command by Killer in PM: /tool teste
+2017-07-02 19:35:04,115:INFO: Command by Killer in PM: /tool mario
+2017-07-02 19:36:16,272:INFO: Command by Killer in PM: /about
+2017-07-02 20:34:45,276:INFO: Command by Killer in PM: /tool mario
+2017-07-02 20:35:44,738:INFO: Command by Killer in PM: /tool mario
+2017-07-02 20:36:20,064:INFO: Command by Killer in PM: /tool Mario 64 Level Importer
+2017-07-02 20:39:19,124:INFO: Command by Killer in PM: /tool Mario 64 Level Importer
+2017-07-02 20:40:03,384:INFO: Command by Killer in PM: /tool Mario 64 Level Importer
+2017-07-02 20:41:30,182:INFO: Command by Killer in PM: /tool mario 64 Level
+2017-07-02 20:42:51,565:INFO: Command by Killer in PM: /tool Mario 64
+2017-07-02 20:47:59,443:INFO: Command by Killer in PM: /tool Mario 64 Level
+2017-07-02 20:49:22,499:INFO: Command by Killer in PM: /tool Mario 64 Level
+2017-07-02 20:55:47,716:INFO: Command by Killer in PM: /tool Mario 64 Level
+2017-07-02 20:56:28,599:INFO: Command by Killer in PM: /tool Mario 64 Level
+2017-07-02 20:58:00,333:INFO: Command by Killer in PM: /tool Mario 64 Level
+2017-07-02 21:04:36,172:INFO: Command by Killer in PM: /tool Super Mario
+2017-07-02 21:05:03,474:INFO: Command by Killer in PM: /tool Mario 64 Level
+2017-07-02 21:06:43,557:INFO: Command by Killer in PM: /tool Mario 64 Level
+2017-07-02 21:09:38,971:INFO: Command by Killer in PM: /tool Mario 64 Level
+2017-07-02 21:12:11,278:INFO: Command by Killer in PM: /tool Mario 64 Level
+2017-07-02 21:14:45,713:INFO: Command by Killer in PM: /tool Mario 64 Level
+2017-07-02 21:16:09,762:INFO: Command by Killer in PM: /tool Mario 64 Level
+2017-07-02 21:16:16,027:INFO: Command by Killer in PM: /tool Mario
+2017-07-02 21:17:36,382:INFO: Command by Killer in PM: /tool Mario
+2017-07-02 21:19:41,046:INFO: Command by Killer in PM: /tool Mario
+2017-07-02 21:20:57,004:INFO: Command by Killer in PM: /tool Mario
+2017-07-02 21:21:25,842:INFO: Command by Killer in PM: /tool Mario
+2017-07-02 21:21:31,396:INFO: Command by Killer in PM: /tool asdf
+2017-07-02 21:21:35,381:INFO: Command by Killer in PM: /tool
+2017-07-02 21:21:39,051:INFO: Command by Killer in PM: /tool Luigi
+2017-07-02 21:21:45,841:INFO: Command by Killer in PM: /tool legend
+2017-07-02 21:21:55,713:INFO: Command by Killer in PM: /tool Kruptar
+2017-07-02 21:23:06,254:INFO: Command by Killer in PM: /tool Kruptar
+2017-07-02 22:12:16,871:INFO: Command by Killer in PM: /help
+2017-07-02 22:12:22,484:INFO: Command by Killer in PM: /traducao_pobre
+2017-07-02 22:12:26,597:INFO: Command by Killer in PM: /traducao_pobre mario
+2017-07-02 22:12:57,555:INFO: Command by Killer in PM: /traducao_pobre mario
+2017-07-02 22:14:35,588:INFO: Command by Killer in PM: /traducao_pobre mario
+2017-07-02 22:17:31,194:INFO: Command by Killer in PM: /traducao_pobre mario
+2017-07-02 22:19:13,188:INFO: Command by Killer in PM: /help
+2017-07-02 22:20:16,344:INFO: Command by Killer in PM: /traducao_pobre mario
+2017-07-02 22:20:59,494:INFO: Command by Killer in PM: /traducao_pobre super mario world
+2017-07-02 22:22:06,093:INFO: Command by Killer in PM: /help
