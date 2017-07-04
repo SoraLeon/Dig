@@ -96,8 +96,8 @@ def get_details(url,mid,tries=5):
 
     # Trimming content to reduce load
     try:
-        start_index = content.index('<body>')
-        end_index = content.index('</body>')
+        start_index = content.index('<div id="content">')
+        end_index = content.index('<div style="text-align: center; padding: 3px; margin:3px;">')
         content = content[start_index:end_index]
     except ValueError:
         # Website fetch was incomplete, due to a network error
@@ -112,7 +112,7 @@ def get_details(url,mid,tries=5):
     
     details = dict()
 
-    if mid == "26": # 26 - detalhes de um utilitário
+    if mid == "26" or mid == "23": # 26 - detalhes de um utilitário / 23 - detalhes de tradução
         # Verifica se existe
         if "<b>Nome" not in content:
             return ERROR_DOESNTEXIST
@@ -147,6 +147,11 @@ def get_details(url,mid,tries=5):
         if m:
             details['sistema'] = m.group(1).strip()
 
+        # Jogadores
+        m = re.search(r'Jogadores</b>:[ ]*([^<]+).*', content)
+        if m:
+            details['jogadores'] = m.group(1).strip()    
+
         # Versão
         m = re.search(r'Versão</b>:[ ]*([^<]+).*', content)
         if m:
@@ -162,19 +167,48 @@ def get_details(url,mid,tries=5):
         if m:
             details['idioma'] = m.group(1).strip()
 
+        # Mídia de distribuição
+        m = re.search(r'distribuição</b>:[ ]*([^<]+).*', content)
+        if m:
+            details['distribuicao'] = m.group(1).strip()  
+
+        # Progresso
+        m = re.search(r'Progresso</b>:[ ]*([^<]+).*', content)
+        if m:
+            details['progresso'] = m.group(1).strip()       
+
         # Plataforma
         m = re.search(r'Plataforma</b>:[ ]*([^<]+).*', content)
         if m:
             details['plataforma'] = m.group(1).strip()
 
         # Descrição
-        m = re.search(r'[\s\S.]*<b>DESCRIÇÃO:[\s\S.]*(?=<div class="even">)<div[^<]+>(.+).*(?=</div>)', content)
+        m = re.search(r'[\s\S.]*<b>DESCRIÇÃO:[\s\S.]*?(?=<div class="even">?)<div[^<]+>(.+).*(?=</div>)', content)
         if m:
             details['descricao'] = html2text.html2text(m.group(1).strip()).replace("\n"," ").replace("   ", "\n")
+
+        # Considerações
+        m = re.search(r'[\s\S.]*<b>CONSIDERAÇÕES:[\s\S.]*?(?=<div class="even">?)<div[^<]+>(.+).*(?=</div>)', content)
+        if m:
+            details['consideracoes'] = html2text.html2text(m.group(1).strip()).replace("\n"," ").replace("   ", "\n")            
+
+        # Imagem capa
+        m = re.search(r'[\s\S.]*<b>CONDIDERAÇÕES:[\s\S.]*(?=<div class="even">)<div[^<]+>(.+).*(?=</div>)', content)
+        if m:
+            details['consideracoes'] = html2text.html2text(m.group(1).strip()).replace("\n"," ").replace("   ", "\n")                        
+
+        # Imagens
+        m = re.search(r'(?<=<b>IMAGENS:)([\s\S.]*)</div></div><br/>', content)
+        if m:          
+            matches = re.findall(r'[^"]*src="([^"]+)"', m.group(1).strip())
+            if matches:
+                details['imagens'] = []
+                for match in matches:
+                    details['imagens'].append(urllib.request.urlopen(urllib.parse.quote(match, safe='/:[]()-.!@#$%&*~^´`{}?;><\\|\'')).read())
 
         # Download
         m = re.search(r'<a href="([^"]+)(?=.*DOWNLOAD)', content)
         if m:
             details['download'] = 'http://romhackers.org/modules/PDdownloads2/' + m.group(1).strip()
 
-    return details      
+    return details

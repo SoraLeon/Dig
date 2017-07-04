@@ -12,6 +12,7 @@ from discord.ext import commands
 
 from config import *
 from utils import checks
+from utils.database import init_database, userDatabase, reload_welcome_messages, welcome_messages, reload_announce_channels
 from utils.discord import get_member, send_log_message, get_region_string, get_channel_by_name, get_user_servers, clean_string, get_role_list, get_member_by_name
 ", get_announce_channel, get_user_worlds"
 from utils.general import command_list, join_list, get_uptime, TimeString, single_line, is_numeric, getLogin, start_time, global_online_list
@@ -37,7 +38,8 @@ async def on_ready():
         command_list.append(command_name)
 
     # Background tasks
-    bot.loop.create_task(check_members())    
+    bot.loop.create_task(check_members())
+    bot.loop.create_task(check_ghosts())     
 
 @bot.event
 @asyncio.coroutine
@@ -98,6 +100,10 @@ def on_message(message):
             return
     yield from bot.process_commands(message)
 
+    # Salva no banco a data da ultima mensagem deste usuario quando enviada de um canal no servidor
+    if not message.channel.is_private:
+        update_ghost(message.author)
+
 
 @bot.event
 @asyncio.coroutine
@@ -123,6 +129,9 @@ def on_member_join(member: discord.Member):
     server_welcome = welcome_messages.get(server_id, "")
     pm = (welcome_pm+"\n"+server_welcome).format(member, bot)
     log_message = "{0.mention} joined.".format(member)
+
+    # Atualiza o status de ghost do membro
+    update_ghost(member)  
 
     yield from send_log_message(bot, member.server, log_message)
     yield from bot.send_message(member, pm)
@@ -435,11 +444,53 @@ def check_members():
         yield from bot.change_presence(game=discord.Game(name=random.choice(game_list)))
         yield from asyncio.sleep(60*20)  # Change game every 20 minutes    
 
+def update_ghost(member):
+    c = userDatabase.cursor()
+    now = datetime.utcnow()
+    try:
+        c.execute("SELECT * FROM user_servers WHERE id = ? AND server = ?", (member.id, member.server.id,))
+        result = c.fetchone()
+        if result is not None:
+            c.execute("""UPDATE user_servers SET last_message = ?, name = ? WHERE id = ? AND server = ?;""", (now, member.id, member.server.id, member.name))
+        else:
+            c.execute("""INSERT INTO user_servers (id, server, last_message, name) values (?, ?, ?, ?);""", (member.id, member.server.id, now, member.name))
+    finally:        
+        c.close()    
+        userDatabase.commit()   
+
+@asyncio.coroutine
+def check_ghosts():           
+    yield from bot.wait_until_ready()
+    while not bot.is_closed:
+        for server in bot.servers:
+            for member in server.members:
+                c = userDatabase.cursor()
+                now = datetime.utcnow()
+                try:
+                    c.execute("SELECT * FROM user_servers WHERE id = ? AND server = ?", (member.id, member.server.id,))
+                    result = c.fetchone()
+                    if result is not None:
+                        last_message = datetime.strptime(result["last_message"], "%Y-%m-%d %H:%M:%S.%f")                       
+                        name = result["name"]                                                
+                        diff = (now - last_message).total_seconds() / 60.0
+                        if (diff/(24*60) > 7.0) or name == 'denim':
+                            #yield from bot.send_message(member.server, "Simulando remoção de usuários: Usuário {0} será removido pois ficou {1} dia(s) sem escrever nada.".format(name, int(diff/(24*60))))                            
+                            #yield from bot.send_message(member, "Você foi kickado do servidor {0} por ficar {1} dia(s) sem escrever nada. Saí daqui seu ghost!".format(member.server.name, int(diff/(24*60))))
+                            for owners in owner_ids:
+                                yield from bot.send_message(member.server.get_member(owners), "O usuário {0} foi kickado do servidor {1} por ficar {2} dia(s) sem escrever nada.".format(member.name, member.server.name, int(diff/(24*60))))
+                            #yield from bot.kick(member)
+                    else: # Não há registro deste usuário escrever algo mas ele está no servidor                        
+                        c.execute("""INSERT INTO user_servers (id, server, last_message, name) values (?, ?, ?, ?);""", (member.id, member.server.id, now, member.name))
+                finally:        
+                    c.close()    
+                    userDatabase.commit()   
+        
+        yield from asyncio.sleep(60*60)  # Verifica a cada uma hora (60 minutos)
+
 if __name__ == "__main__":
-    #init_database()
-    #reload_worlds()
-    #reload_welcome_messages()
-    #reload_announce_channels()
+    init_database()    
+    reload_welcome_messages()
+    reload_announce_channels()
 
     print("Tentativa de login...")
 

@@ -6,6 +6,7 @@ import urllib.request
 import aiohttp
 import re
 import html
+import html2text
 
 url_pobre = "http://romhackers.org/search.php?query={0}&mid={1}&action=showall&andor=AND&start={2}"
 
@@ -70,7 +71,6 @@ def get_details(url,mid,tries=5):
     try:
         page = yield from aiohttp.get(url)
         content = yield from page.text(encoding='ISO-8859-1')
-        print(content)
     except Exception:
         if tries == 0:
             log.error("get_details: Couldn't fetch the url {0} network error.".format(url))
@@ -83,8 +83,8 @@ def get_details(url,mid,tries=5):
 
     # Trimming content to reduce load
     try:
-        start_index = content.index('<body>')
-        end_index = content.index('</body>')
+        start_index = content.index('<div id="content">')
+        end_index = content.index('<div style="text-align: center; padding: 3px; margin:3px;">')
         content = content[start_index:end_index]
     except ValueError:
         # Website fetch was incomplete, due to a network error
@@ -99,7 +99,7 @@ def get_details(url,mid,tries=5):
     
     details = dict()
 
-    if mid == "26": # 26 - detalhes de um utilitário
+    if mid == "26" or mid == "23": # 26 - detalhes de um utilitário / 23 - detalhes de tradução
         # Verifica se existe
         if "<b>Nome" not in content:
             return ERROR_DOESNTEXIST
@@ -107,77 +107,98 @@ def get_details(url,mid,tries=5):
         # Nome
         m = re.search(r'Nome</b>:[ ]*([^<]+).*', content)
         if m:
-            char['nome'] = m.group(1).strip()
+            details['nome'] = m.group(1).strip()
 
         # Autor
         m = re.search(r'Autor</b>:[ ]*([^<]+).*', content)
         if m:
-            char['autor'] = m.group(1).strip()
+            details['autor'] = m.group(1).strip()
 
         # Grupo
         m = re.search(r'Grupo</b>:[ ]*([^<]+).*', content)
         if m:
-            char['grupo'] = m.group(1).strip()
+            details['grupo'] = m.group(1).strip()
 
         # Site
         m = re.search(r'Site</b>:[^<]+<a href="([^<]+)" target="_blank">', content)
         if m:
-            char['site'] = m.group(1).strip()
+            details['site'] = m.group(1).strip()
 
         # Categoria
         m = re.search(r'Categoria</b>:[ ]*([^<]+).*', content)
         if m:
-            char['categoria'] = m.group(1).strip()
+            details['categoria'] = m.group(1).strip()
 
         # Sistema
         m = re.search(r'Sistema</b>:[ ]*([^<]+).*', content)
         if m:
-            char['sistema'] = m.group(1).strip()
+            details['sistema'] = m.group(1).strip()
+
+        # Jogadores
+        m = re.search(r'Jogadores</b>:[ ]*([^<]+).*', content)
+        if m:
+            details['jogadores'] = m.group(1).strip()    
 
         # Versão
         m = re.search(r'Versão</b>:[ ]*([^<]+).*', content)
         if m:
-            char['versao'] = m.group(1).strip()
+            details['versao'] = m.group(1).strip()
 
         # Lançamento
         m = re.search(r'Lançamento</b>:[ ]*([^<]+).*', content)
         if m:
-            char['lancamento'] = m.group(1).strip()
+            details['lancamento'] = m.group(1).strip()
 
         # Idioma
         m = re.search(r'Idioma</b>:[ ]*([^<]+).*', content)
         if m:
-            char['idioma'] = m.group(1).strip()
+            details['idioma'] = m.group(1).strip()
+
+        # Mídia de distribuição
+        m = re.search(r'distribuição</b>:[ ]*([^<]+).*', content)
+        if m:
+            details['distribuicao'] = m.group(1).strip()  
+
+        # Progresso
+        m = re.search(r'Progresso</b>:[ ]*([^<]+).*', content)
+        if m:
+            details['progresso'] = m.group(1).strip()       
 
         # Plataforma
         m = re.search(r'Plataforma</b>:[ ]*([^<]+).*', content)
         if m:
-            char['plataforma'] = m.group(1).strip()
+            details['plataforma'] = m.group(1).strip()
 
         # Descrição
-        m = re.search(r'[\s\S.]*<b>DESCRIÇÃO:[\s\S.]*(?=<div class="even">)<div[^<]+>(.+).*(?=</div>)', content)
+        m = re.search(r'[\s\S.]*<b>DESCRIÇÃO:[\s\S.]*?(?=<div class="even">?)<div[^<]+>(.+).*(?=</div>)', content)
         if m:
-            char['descricao'] = m.group(1).strip()
+            details['descricao'] = html2text.html2text(m.group(1).strip()).replace("\n"," ").replace("   ", "\n")
+
+        # Considerações
+        m = re.search(r'[\s\S.]*<b>CONSIDERAÇÕES:[\s\S.]*?(?=<div class="even">?)<div[^<]+>(.+).*(?=</div>)', content)
+        if m:
+            details['consideracoes'] = html2text.html2text(m.group(1).strip()).replace("\n"," ").replace("   ", "\n")            
+
+        # Imagem capa
+        m = re.search(r'[\s\S.]*<b>CONDIDERAÇÕES:[\s\S.]*(?=<div class="even">)<div[^<]+>(.+).*(?=</div>)', content)
+        if m:
+            details['consideracoes'] = html2text.html2text(m.group(1).strip()).replace("\n"," ").replace("   ", "\n")                        
+
+        # Imagens
+        m = re.search(r'(?<=<b>IMAGENS:)([\s\S.]*)</div></div><br/>', content)
+        if m:          
+            matches = re.findall(r'[^"]*src="([^"]+)"', m.group(1).strip())
+            if matches:
+                details['imagens'] = matches
 
         # Download
         m = re.search(r'<a href="([^"]+)(?=.*DOWNLOAD)', content)
         if m:
-            char['download'] = 'http://romhackers.org/modules/PDdownloads2/' + m.group(1).strip()
+            details['download'] = 'http://romhackers.org/modules/PDdownloads2/' + m.group(1).strip()
 
-        '''regex_deaths = r'<b>Nome</b>:[ ]*([^<]+).*<b>Autor</b>:[ ]*([^<]+).*<b>Grupo</b>:[ ]*([^<]+).*<b>Site</b>:[^<]+<a href="([^<]+)" target="_blank">[^<]+</a>.*<b>Categoria</b>:[ ]*([^<]+).*<b>Sistema</b>:[ ]*([^<]+).*<b>Versão</b>:[ ]*([^<]+).*<b>Lançamento</b>:[ ]*([^<]+).*<b>Idioma</b>:[ ]*([^<]+).*<b>Plataforma</b>:[ ]*([^<]+)</div>[\s\S.]*<b>DESCRIÇÃO:[\s\S.]*(?=<div class="even">)<div[^<]+>(.+).*(?=</div>)'
-        pattern = re.compile(regex_deaths, re.MULTILINE + re.S)
-        matches = re.findall(pattern, content)
-        
-        for m in matches:
-            details.append({'nome': html.unescape(m[0]), 'autor': html.unescape(m[1]), 'grupo': html.unescape(m[2]), 'site': m[3], 'categoria': html.unescape(m[4]), 'sistema': html.unescape(m[5]), 'versao': html.unescape(m[6]), 'lancamento': html.unescape(m[7]), 'idioma': html.unescape(m[8]), 'plataforma': html.unescape(m[9])})
-        if (details == []):
-            details = None
-        else:
-            details = details[0]'''
-    
-    return details         
+    return details          
 
 loop = asyncio.get_event_loop()
 # Blocking call which returns when the hello_world() coroutine is done
-loop.run_until_complete(get_search('mario+64+level','26','0'))
+loop.run_until_complete(get_search('Super+Mario+World+(BR+Traduções)','23','0'))
 loop.close()
