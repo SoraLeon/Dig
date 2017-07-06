@@ -1,0 +1,16 @@
+setuptools
+ez_setup
+discord.py[voice]
+pillow
+requests
+html2text
+asyncio
+datetime 
+urllib
+aiohttp
+sys
+os
+re
+html
+psutil
+logging
