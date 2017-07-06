@@ -50,7 +50,7 @@ class Pobre:
 
             # Attach item's image only if the bot has permissions
             permissions = ctx.message.channel.permissions_for(get_member(self.bot, self.bot.user.id, ctx.message.server))
-            trad = traducao[0]
+            trad = tool[0]
             item = dict()
             if "details" in trad:
                 if "imagens" in trad["details"]:
@@ -126,20 +126,20 @@ class Pobre:
         if name is None:
             yield from self.bot.say("Diga-me o nome do tutorial que desejas pesquisar.")
             return
-        traducao = yield from get_search(parse.quote(name.replace(' ', '+').encode('iso-8859-1'), safe='+'), "19", '0')
-        if traducao is None or len(traducao) == 0:
+        tutorial = yield from get_search(parse.quote(name.replace(' ', '+').encode('iso-8859-1'), safe='+'), "19", '0')
+        if tutorial is None or len(tutorial) == 0:
             yield from self.bot.say("Não encontrei nenhum tutorial.")
             return
         long = ctx.message.channel.is_private or ctx.message.channel.name == ask_channel_name
-        embed = self.get_tutorial_embed(ctx, traducao, long)
-        if len(traducao) > 1:                        
+        embed = self.get_tutorial_embed(ctx, tutorial, long)
+        if len(tutorial) > 1:                        
             yield from self.bot.say("Não pude trazer os detalhes deste tutorial, mas eu trouxe uma lista com possíveis resultados:", embed=embed)
         else:
             yield from self.bot.say(embed=embed)  
 
             # Attach item's image only if the bot has permissions
             permissions = ctx.message.channel.permissions_for(get_member(self.bot, self.bot.user.id, ctx.message.server))
-            trad = traducao[0]
+            trad = tutorial[0]
             item = dict()
             if "details" in trad:
                 if "imagens" in trad["details"]:

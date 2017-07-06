@@ -193,6 +193,7 @@ def get_details(url,mid,tries=5):
             details['consideracoes'] = html2text.html2text(m.group(1).strip()).replace("\n"," ").replace("   ", "\n")            
 
         # Imagem capa
+        # TODO: ainda verificar REGEX
         m = re.search(r'[\s\S.]*<b>CONDIDERAÇÕES:[\s\S.]*(?=<div class="even">)<div[^<]+>(.+).*(?=</div>)', content)
         if m:
             details['consideracoes'] = html2text.html2text(m.group(1).strip()).replace("\n"," ").replace("   ", "\n")                        

@@ -28,6 +28,9 @@ bot.remove_command("help")
 @bot.event
 async def on_ready():
     bot.load_extension("rh_pobre")
+    bot.load_extension("mod")
+    bot.load_extension("owner")
+    bot.load_extension("admin")
     print('Logado como')
     print(bot.user.name)
     print(bot.user.id)
@@ -473,11 +476,11 @@ def check_ghosts():
                         last_message = datetime.strptime(result["last_message"], "%Y-%m-%d %H:%M:%S.%f")                       
                         name = result["name"]                                                
                         diff = (now - last_message).total_seconds() / 60.0
-                        if (diff/(24*60) > 7.0) or name == 'denim':
+                        if (diff/(24*60) > 7.0):
                             #yield from bot.send_message(member.server, "Simulando remoção de usuários: Usuário {0} será removido pois ficou {1} dia(s) sem escrever nada.".format(name, int(diff/(24*60))))                            
                             #yield from bot.send_message(member, "Você foi kickado do servidor {0} por ficar {1} dia(s) sem escrever nada. Saí daqui seu ghost!".format(member.server.name, int(diff/(24*60))))
                             for owners in owner_ids:
-                                yield from bot.send_message(member.server.get_member(owners), "O usuário {0} foi kickado do servidor {1} por ficar {2} dia(s) sem escrever nada.".format(member.name, member.server.name, int(diff/(24*60))))
+                                yield from bot.send_message(member.server.get_member(owners), "O usuário {0} foi kickado (simulação apenas) do servidor {1} por ficar {2} dia(s) sem escrever nada.".format(member.name, member.server.name, int(diff/(24*60))))
                             #yield from bot.kick(member)
                     else: # Não há registro deste usuário escrever algo mas ele está no servidor                        
                         c.execute("""INSERT INTO user_servers (id, server, last_message, name) values (?, ?, ?, ?);""", (member.id, member.server.id, now, member.name))

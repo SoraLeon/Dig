@@ -1,1 +1,1 @@
-worker: python rh.py
+worker: python monkeyslave.py

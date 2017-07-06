@@ -3,7 +3,6 @@ pillow
 psutil
 requests
 html2text
-logging
 os
 re
 time
@@ -24,4 +23,4 @@ urllib
 aiohttp
 re
 html
-html2text
+logging
