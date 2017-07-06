@@ -491,3 +491,9 @@ if __name__ == '__main__':
 	'no entanto, se adotarmos 2 píxels, talvez resolve.'
 	'no entanto, se adotarmos 2 píxels, talvez resolva.'
 2017-07-05 22:13:43,030:INFO: Command by Killer in #geral (RHBR): /patch picross
+2017-07-05 22:38:05,383:INFO: @denim edited a message in #geral (RHBR):
+	'se o cara for russo e aparecer com camisa de futebol da rússia, edita e coloque outro páis oras'
+	'se o cara for russo e aparecer com camisa de futebol da rússia, edita e coloque outro país oras'
+2017-07-05 22:42:03,790:INFO: Command by bMatSantos in #geral (RHBR): /traducao new super mario bros
+2017-07-05 22:42:46,167:INFO: Command by Killer in #geral (RHBR): /traducao New Super Mario Bros. Wii (Brazilian Warriors)
+2017-07-05 22:47:56,944:INFO: Command by Killer in #geral (RHBR): /patch New Super Mario Bros. Wii (Brazilian Warriors)
