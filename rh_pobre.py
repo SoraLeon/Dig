@@ -123,7 +123,7 @@ class Pobre:
         if len(traducao) > 1:  
             start = 0
             answer = '+'
-            yield from self.bot.say("Escolha uma das opções abaixo (0: Cancelar):", embed=embed)
+            bot_message = yield from self.bot.say("Escolha uma das opções abaixo (0: Cancelar):", embed=embed)
             while answer == '+' or answer == '-':                                      
                 answer = yield from self.bot.wait_for_message(author=ctx.message.author, channel=ctx.message.channel,timeout=30.0)
                 if answer is None:
@@ -135,7 +135,7 @@ class Pobre:
                         yield from self.bot.say("Mudou de ideia? Típico.")
                         return
                     try:    
-                        tchoicerd = traducao[answer-1]
+                        choice = traducao[answer-1]
                         traducao = []             
                         details = yield from get_details(choice["link"], "23", '0')
                         traducao.append({'name' : choice["name"], 'link' : choice["link"], 'details': details})
@@ -149,7 +149,7 @@ class Pobre:
                     if  answer == '-' and start - 10 >= 0:
                         start -= 10
                         embed = self.get_traducao_embed(ctx, traducao, long, start) 
-                    elif answer == '+' and start + 10 < len(tool):
+                    elif answer == '+' and start + 10 < len(traducao):
                         start += 10
                         embed = self.get_traducao_embed(ctx, traducao, long, start)
                     yield from self.bot.edit_message(bot_message, "Escolha uma das opções abaixo (0: Cancelar):", embed=embed)     
@@ -200,7 +200,7 @@ class Pobre:
         if len(tutorial) > 1:  
             start = 0
             answer = '+'
-            yield from self.bot.say("Escolha uma das opções abaixo (0: Cancelar):", embed=embed)
+            bot_message = yield from self.bot.say("Escolha uma das opções abaixo (0: Cancelar):", embed=embed)
             while answer == '+' or answer == '-':                                       
                 answer = yield from self.bot.wait_for_message(author=ctx.message.author, channel=ctx.message.channel,timeout=30.0)
                 if answer is None:
@@ -226,7 +226,7 @@ class Pobre:
                     if  answer == '-' and start - 10 >= 0:
                         start -= 10
                         embed = self.get_tutorial_embed(ctx, tutorial, long, start) 
-                    elif answer == '+' and start + 10 < len(tool):
+                    elif answer == '+' and start + 10 < len(tutorial):
                         start += 10
                         embed = self.get_tutorial_embed(ctx, tutorial, long, start)
                     yield from self.bot.edit_message(bot_message, "Escolha uma das opções abaixo (0: Cancelar):", embed=embed)     
@@ -332,7 +332,7 @@ class Pobre:
             index += 1
             if index == start+10 and start >= 10:
                 desc += "*-: Página anterior*\t"
-            if index == start+10 and len(tool) > start+10:                
+            if index == start+10 and len(traducao) > start+10:                
                 desc += "*+: Próxima página*\n"
 
         embed = discord.Embed(title=title, description=desc)      
@@ -378,7 +378,7 @@ class Pobre:
             index += 1
             if index == start+10 and start >= 10:
                 desc += "*-: Página anterior*\t"
-            if index == start+10 and len(tool) > start+10:                
+            if index == start+10 and len(tutorial) > start+10:                
                 desc += "*+: Próxima página*\n"
         
         embed = discord.Embed(title=title, description=desc)      
