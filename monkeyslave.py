@@ -315,14 +315,30 @@ def about(ctx):
     yield from bot.say(embed=embed)        
 
 
-@bot.command(pass_context=True, description='For when you wanna settle the score some other way')
+@bot.command(pass_context=True, description='Para quando você precisa de um empurrãozinho pra decidir algo')
 @asyncio.coroutine
 def choose(ctx, *choices: str):
-    """Chooses between multiple choices."""
+    """Realiza uma escolha entre múltiplas opções."""
     if choices is None:
         return
     user = ctx.message.author
-    yield from bot.say('Alright, **@{0}**, I choose: "{1}"'.format(user.display_name, random.choice(choices)))   
+    yield from bot.say('Elementar, caro **@{0}**, eu escolho: "{1}"'.format(user.display_name, random.choice(choices)))   
+
+@bot.command(pass_context=True, description='Pra quando você precisa se comunciar com o famoso Sliter')
+@asyncio.coroutine
+def sliter(ctx, *mensagem: str):
+    """Traduz para a linguagem Sliter."""
+    if mensagem is None:
+        return
+    user = ctx.message.author
+    phrase = ''
+    for word in mensagem:   
+        wordl = list(word) 
+        for i in range(1, len(word), 2):
+            if random.randint(0, 1):
+                wordl[i-1], wordl[i] = wordl[i], wordl[i-1]
+        phrase += ''.join(wordl) + ' '
+    yield from bot.say(phrase)       
 
 @bot.command(pass_context=True, no_pm=True, name="server", aliases=["serverinfo", "server_info"])
 @asyncio.coroutine
