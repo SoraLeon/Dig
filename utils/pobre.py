@@ -205,7 +205,7 @@ def get_details(url,mid,tries=5):
             if matches:
                 details['imagens'] = []
                 for match in matches:
-                    details['imagens'].append(urllib.request.urlopen(urllib.parse.quote(match, safe='/:[]()-.!@#$%&*~^´`{}?;><\\|\'')).read())
+                    details['imagens'].append(urllib.request.urlopen(urllib.parse.quote(match, safe='=/:[]()-.!@#$%&*~^´`{}?;><\\|\'')).read())
 
         # Download
         m = re.search(r'<a href="([^"]+)(?=.*DOWNLOAD)', content)
