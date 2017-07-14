@@ -10,7 +10,7 @@ lite_mode = False
 #   If ask_channel_delete is True, any message that is not a command will be deleted, to keep the channel for
 #   commands only
 # server_log_channel is where the bot will log certain actions such as member joining and registering characters.
-ask_channel_name = "ask-nabbot"
+ask_channel_name = "ask-monkey"
 ask_channel_delete = True
 log_channel_name = "server-log"
 
