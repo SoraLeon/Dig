@@ -30,6 +30,8 @@ class Pobre:
     def jogo(self, ctx, *, name: str=None):
         """Pesquisa jogos no romhacking.net"""
 
+        ask_channel = get_channel_by_name(self.bot, ask_channel_name, ctx.message.server)
+        destination = ctx.message.channel if ctx.message.channel.name == ask_channel_name else ctx.message.author
         permissions = ctx.message.channel.permissions_for(get_member(self.bot, self.bot.user.id, ctx.message.server))
         if not permissions.embed_links:
             yield from self.bot.say("Foi mal, eu preciso de permissões de `Embed Links` para executar este comando.")
@@ -80,6 +82,9 @@ class Pobre:
                 else:
                     yield from self.bot.say("Essa não é uma resposta válida!")
         if len(game) == 1:
+            if destination != ask_channel:
+                yield from self.bot.say("Estou te enviando as informações solicitadas via mensagem privada.")
+
             # Attach folder image if there is
             permissions = ctx.message.channel.permissions_for(get_member(self.bot, self.bot.user.id, ctx.message.server))
             trad = game[0]
@@ -95,11 +100,11 @@ class Pobre:
                                 f.close()
 
                             with open(filename, "r+b") as f:
-                                yield from self.bot.upload(f)
+                                yield from self.bot.send_file(destination, f)
                                 f.close()
                             os.remove(filename)
 
-            yield from self.bot.say(embed=embed) 
+            yield from self.bot.send_message(destination, embed=embed)
             
             # Attach item's image only if the bot has permissions
             permissions = ctx.message.channel.permissions_for(get_member(self.bot, self.bot.user.id, ctx.message.server))
@@ -116,7 +121,7 @@ class Pobre:
                                 f.close()
 
                             with open(filename, "r+b") as f:
-                                yield from self.bot.upload(f)
+                                yield from self.bot.send_file(destination, f)
                                 f.close()
                             os.remove(filename)
     
@@ -125,6 +130,8 @@ class Pobre:
     def traducao_rh(self, ctx, *, name: str=None):
         """Pesquisa traduções no romhacking.net"""
 
+        ask_channel = get_channel_by_name(self.bot, ask_channel_name, ctx.message.server)
+        destination = ctx.message.channel if ctx.message.channel.name == ask_channel_name else ctx.message.author
         permissions = ctx.message.channel.permissions_for(get_member(self.bot, self.bot.user.id, ctx.message.server))
         if not permissions.embed_links:
             yield from self.bot.say("Foi mal, eu preciso de permissões de `Embed Links` para executar este comando.")
@@ -175,6 +182,9 @@ class Pobre:
                 else:
                     yield from self.bot.say("Essa não é uma resposta válida!")
         if len(traducao) == 1:
+            if destination != ask_channel:
+                yield from self.bot.say("Estou te enviando as informações solicitadas via mensagem privada.")
+
             # Attach folder image if there is
             permissions = ctx.message.channel.permissions_for(get_member(self.bot, self.bot.user.id, ctx.message.server))
             trad = traducao[0]
@@ -190,11 +200,11 @@ class Pobre:
                                 f.close()
 
                             with open(filename, "r+b") as f:
-                                yield from self.bot.upload(f)
+                                yield from self.bot.send_file(destination, f)
                                 f.close()
                             os.remove(filename)
 
-            yield from self.bot.say(embed=embed) 
+            yield from self.bot.send_message(destination, embed=embed)
             
             # Attach item's image only if the bot has permissions
             permissions = ctx.message.channel.permissions_for(get_member(self.bot, self.bot.user.id, ctx.message.server))
@@ -211,7 +221,7 @@ class Pobre:
                                 f.close()
 
                             with open(filename, "r+b") as f:
-                                yield from self.bot.upload(f)
+                                yield from self.bot.send_file(destination, f)
                                 f.close()
                             os.remove(filename)
     
@@ -220,6 +230,8 @@ class Pobre:
     def utilitario(self, ctx, *, name: str=None):
         """Pesquisa utilitários no PO.B.R.E."""
 
+        ask_channel = get_channel_by_name(self.bot, ask_channel_name, ctx.message.server)
+        destination = ctx.message.channel if ctx.message.channel.name == ask_channel_name else ctx.message.author
         permissions = ctx.message.channel.permissions_for(get_member(self.bot, self.bot.user.id, ctx.message.server))
         if not permissions.embed_links:
             yield from self.bot.say("Foi mal, eu preciso de permissões de `Embed Links` para executar este comando.")
@@ -270,7 +282,10 @@ class Pobre:
                 else:
                     yield from self.bot.say("Essa não é uma resposta válida!")
         if len(tool) == 1:
-            yield from self.bot.say(embed=embed)
+            if destination != ask_channel:
+                yield from self.bot.say("Estou te enviando as informações solicitadas via mensagem privada.")
+
+            yield from self.bot.send_message(destination, embed=embed)
 
             # Attach item's image only if the bot has permissions
             permissions = ctx.message.channel.permissions_for(get_member(self.bot, self.bot.user.id, ctx.message.server))
@@ -288,7 +303,7 @@ class Pobre:
                                 f.close()
 
                             with open(filename, "r+b") as f:
-                                yield from self.bot.upload(f)
+                                yield from self.bot.send_file(destination, f)
                                 f.close()
                             os.remove(filename)
 
@@ -297,6 +312,8 @@ class Pobre:
     def traducao(self, ctx, *, name: str=None):
         """Pesquisa traduções no PO.B.R.E."""
 
+        ask_channel = get_channel_by_name(self.bot, ask_channel_name, ctx.message.server)
+        destination = ctx.message.channel if ctx.message.channel.name == ask_channel_name else ctx.message.author
         permissions = ctx.message.channel.permissions_for(get_member(self.bot, self.bot.user.id, ctx.message.server))
         if not permissions.embed_links:
             yield from self.bot.say("Foi mal, eu preciso de permissões de `Embed Links` para executar este comando.")
@@ -347,7 +364,11 @@ class Pobre:
                 else:
                     yield from self.bot.say("Essa não é uma resposta válida!")
         if len(traducao) == 1:
-            yield from self.bot.say(embed=embed) 
+            if destination != ask_channel:
+                yield from self.bot.say("Estou te enviando as informações solicitadas via mensagem privada.")
+
+            yield from self.bot.send_message(destination, embed=embed)
+
             # Attach item's image only if the bot has permissions
             permissions = ctx.message.channel.permissions_for(get_member(self.bot, self.bot.user.id, ctx.message.server))
             trad = traducao[0]
@@ -364,7 +385,7 @@ class Pobre:
                                 f.close()
 
                             with open(filename, "r+b") as f:
-                                yield from self.bot.upload(f)
+                                yield from self.bot.send_file(destination, f)
                                 f.close()
                             os.remove(filename)
             
@@ -374,6 +395,8 @@ class Pobre:
     def tutorial(self, ctx, *, name: str=None):
         """Pesquisa tutoriais no PO.B.R.E."""
 
+        ask_channel = get_channel_by_name(self.bot, ask_channel_name, ctx.message.server)
+        destination = ctx.message.channel if ctx.message.channel.name == ask_channel_name else ctx.message.author
         permissions = ctx.message.channel.permissions_for(get_member(self.bot, self.bot.user.id, ctx.message.server))
         if not permissions.embed_links:
             yield from self.bot.say("Foi mal, eu preciso de permissões de `Embed Links` para executar este comando.")
@@ -424,7 +447,11 @@ class Pobre:
                 else:
                     yield from self.bot.say("Essa não é uma resposta válida!")
         if len(tutorial) == 1:
-            yield from self.bot.say(embed=embed)  
+            if destination != ask_channel:
+                yield from self.bot.say("Estou te enviando as informações solicitadas via mensagem privada.")
+
+            yield from self.bot.send_message(destination, embed=embed)
+
             # Attach item's image only if the bot has permissions
             permissions = ctx.message.channel.permissions_for(get_member(self.bot, self.bot.user.id, ctx.message.server))
             trad = tutorial[0]
@@ -441,7 +468,7 @@ class Pobre:
                                 f.close()
 
                             with open(filename, "r+b") as f:
-                                yield from self.bot.upload(f)
+                                yield from self.bot.send_file(destination, f)
                                 f.close()
                             os.remove(filename)      
 
