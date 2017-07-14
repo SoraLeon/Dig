@@ -136,6 +136,13 @@ def on_member_join(member: discord.Member):
     # Atualiza o status de ghost do membro
     update_ghost(member)  
 
+    # Coloca o membro na role "visitantes"
+    roleName = 'visitante'
+    for role in get_role_list(member.server):
+        if role.name.lower() == roleName:
+            yield from bot.add_roles(member, role)
+            log.info("{0.display_name} (ID: {0.id}) added to role {1.name}".format(member, role))
+
     yield from send_log_message(bot, member.server, log_message)
     yield from bot.send_message(member, pm)
     yield from bot.send_message(member.server, "Ei, {0.mention}, bem vindo. E nada de cobranças aqui!".format(member))
