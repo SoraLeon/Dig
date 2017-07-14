@@ -69,7 +69,7 @@ class Pobre:
                     except IndexError:
                         yield from self.bot.say("Nossa, pra que fazer isso, você nem escolheu algo válido. Agora comece de novo.")
                 elif isinstance(answer.content, str) and (answer.content == '-' or answer.content == '+'):
-                    if not ctx.message.channel.is_private:
+                    if not ctx.message.channel.is_private and ctx.message.channel != ask_channel:
                         yield from self.bot.delete_message(answer)
                     answer = str(answer.content)
                     if  answer == '-' and start - 10 >= 0:
@@ -169,7 +169,7 @@ class Pobre:
                     except IndexError:
                         yield from self.bot.say("Nossa, pra que fazer isso, você nem escolheu algo válido. Agora comece de novo.")
                 elif isinstance(answer.content, str) and (answer.content == '-' or answer.content == '+'):
-                    if not ctx.message.channel.is_private:
+                    if not ctx.message.channel.is_private and ctx.message.channel != ask_channel:
                         yield from self.bot.delete_message(answer)
                     answer = str(answer.content)
                     if  answer == '-' and start - 10 >= 0:
@@ -269,7 +269,7 @@ class Pobre:
                     except IndexError:
                         yield from self.bot.say("Nossa, pra que fazer isso, você nem escolheu algo válido. Agora comece de novo.")
                 elif isinstance(answer.content, str) and (answer.content == '-' or answer.content == '+'):
-                    if not ctx.message.channel.is_private:
+                    if not ctx.message.channel.is_private and ctx.message.channel != ask_channel:
                         yield from self.bot.delete_message(answer)
                     answer = str(answer.content)
                     if  answer == '-' and start - 10 >= 0:
@@ -351,7 +351,7 @@ class Pobre:
                     except IndexError:
                         yield from self.bot.say("Nossa, pra que fazer isso, você nem escolheu algo válido. Agora comece de novo.")
                 elif isinstance(answer.content, str) and (answer.content == '-' or answer.content == '+'):
-                    if not ctx.message.channel.is_private:
+                    if not ctx.message.channel.is_private and ctx.message.channel != ask_channel:
                         yield from self.bot.delete_message(answer)
                     answer = str(answer.content)
                     if  answer == '-' and start - 10 >= 0:
@@ -434,7 +434,7 @@ class Pobre:
                     except IndexError:
                         yield from self.bot.say("Nossa, pra que fazer isso, você nem escolheu algo válido. Agora comece de novo.")
                 elif isinstance(answer.content, str) and (answer.content == '-' or answer.content == '+'):
-                    if not ctx.message.channel.is_private:
+                    if not ctx.message.channel.is_private and ctx.message.channel != ask_channel:
                         yield from self.bot.delete_message(answer)
                     answer = str(answer.content)
                     if  answer == '-' and start - 10 >= 0:
